@@ -2,8 +2,12 @@ import strategy.moving_average as ma
 import pandas as pd
 
 def keltner_signals(df, span, strategy=1, TimeperiodLong =40, TimeperiodShort =4, AdaWin =4):
-    signal, mid, upper, lower = keltner(df, span, strategy=strategy, TimeperiodLong =TimeperiodLong, TimeperiodShort =TimeperiodShort, AdaWin =AdaWin)
+    signal, mid, upper, lower, atr = keltner(df, span, strategy=strategy, TimeperiodLong =TimeperiodLong, TimeperiodShort =TimeperiodShort, AdaWin =AdaWin)
     return signal
+
+def keltner_atr(df, span, strategy=1, TimeperiodLong =40, TimeperiodShort =4, AdaWin =4):
+    signal, mid, upper, lower, atr = keltner(df, span, strategy=strategy, TimeperiodLong =TimeperiodLong, TimeperiodShort =TimeperiodShort, AdaWin =AdaWin)
+    return atr
 
 def keltner(df, span, strategy, TimeperiodLong, TimeperiodShort, AdaWin):
     tr=[0]
@@ -38,7 +42,7 @@ def keltner(df, span, strategy, TimeperiodLong, TimeperiodShort, AdaWin):
             else:
                 signal[i] = 0
         
-    return pd.Series(signal, index=df.index), mid, upper, lower
+    return pd.Series(signal, index=df.index), mid, upper, lower, atr
 
 def show_keltner_orders(df, span, strategy):
     signals, mid, upper, lower = keltner(bxm, span, strategy)
